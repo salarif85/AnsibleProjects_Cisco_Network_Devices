@@ -1,0 +1,8 @@
+ansible_network_os: ios
+ansible_connection: network_cli
+ansible_user: sultan
+ansible_password: sultan
+ansible_become: yes
+ansible_become_method: enable
+ansible_ssh_common_args: '-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null' # Disable SSH host key checking Not for Production environments
+#for production environments, you should manage SSH keys properly

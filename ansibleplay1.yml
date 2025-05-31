@@ -1,0 +1,20 @@
+---
+- name: Retrive router configuration
+  hosts: routers
+  gather_facts: no
+  connection: network_cli
+
+  tasks:
+    - name: Run show command
+      ios_command:
+        commands:
+          - show running-config
+          - show version
+          - show ip route
+          - show ip interface brief
+      register: show_output
+
+    - name: Display command output 
+      debug:
+        var: show_output.stdout_lines
+        

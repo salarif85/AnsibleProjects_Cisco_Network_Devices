@@ -1,0 +1,42 @@
+---
+- name: Configure Multiple Cisco Routers
+  hosts: cisco_routers
+  gather_facts: no
+
+  tasks:
+    - name: Configure Interfaces
+      ios_config:
+        lines:
+          - "description {{ item.description }}"
+          - "ip address {{ item.ip.split('/')[0] }} {{ item.ip | ansible.netcommon.ipaddr('netmask') }}"
+          - "no shutdown"
+        parents: "interface {{ item.name }}"
+      loop: "{{ interfaces }}"
+      tags: interfaces
+    - name: OSPF Configuration for area 0
+      ios_config:
+        lines:
+          - "router ospf 1"
+          - "network {{ item.ip.split('/')[0] }} {{ item.ip | ansible.netcommon.ipaddr('wildcard') }} area 0"
+          - "passive-interface loopback0"
+        
+      loop: "{{ interfaces }}"
+      tags: ospf
+    - name: Exit configuration mode
+      ios_command:
+        commands:
+          - "end"
+          - "write memory"
+      tags: exit_config
+    - name: Run show command
+      ios_command:
+        commands:
+          - "show ip interface brief"
+      register: show_output
+      tags: show_commands
+    - name: Display show command output
+      debug:
+        var: show_output.stdout_lines
+      tags: show_commands
+    
+    

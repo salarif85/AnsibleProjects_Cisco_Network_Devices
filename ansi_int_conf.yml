@@ -1,0 +1,69 @@
+---
+  - name: interface configuration ansible file
+    hosts: routers
+    gather_facts: no
+    connection: network_cli
+    tasks:
+      - name: congfigure ip on the interface FastEthernet0/1
+        ios_config:
+          lines:
+            - ip address 10.20.12.1 255.255.255.0
+            - description *** Connected to Router 2***
+            - no shutdown
+          parents: interface FastEthernet0/1
+        deligate_to: {R1}
+      - name: congfigure ip on the interface FastEthernet1/0
+        ios_config:
+          
+          lines:
+            - ip address 192.168.14.1 255.255.255.0
+            - description *** Connected to Router 4***
+            - no shutdown
+          parents: interface FastEthernet1/0
+        deligate_to: {R1}
+      - name: congfigure ip on the interface loopback0
+        ios_config:
+          
+          lines:
+            - ip address 1.1.1.1 255.255.255.255
+            - description *** Loopback interface 0. Never make is shutdown***
+            - no shutdown
+          parents: interface loopback0
+        deligate_to: {R1}
+      - name: congfigure ip on the interface FastEthernet0/1
+        ios_config:
+          
+          lines:
+            - ip address 10.20.12.2 255.255.255.0
+            - description *** Connected to Router 1***
+            - no shutdown
+          parents: interface FastEthernet0/1
+        deligate_to: {R2}
+      - name: congfigure ip on the interface FastEthernet1/0
+        ios_config:
+          
+          lines:
+            - ip address 192.168.23.2 255.255.255.0
+            - description *** Connected to Router 3***
+            - no shutdown
+          parents: interface FastEthernet1/0
+        deligate_to: {R2}
+      - name: congfigure ip on the interface loopback0
+        ios_config:
+          
+          lines:
+            - ip address 2.2.2.2 255.255.255.255
+            - description *** Loopback interface 0. Never make is shutdown***
+            - no shutdown
+          parents: interface loopback0
+        deligate_to: {R2}
+      - name: Run show command
+        ios_command:
+          commands:
+            - show ip interface brief
+        register: show_output
+  
+      - name: Display command output 
+        debug:
+          var: show_output.stdout_lines
+       

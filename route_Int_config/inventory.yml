@@ -1,0 +1,28 @@
+all:
+  children:
+    cisco_routers:
+      hosts:
+        R1:
+          ansible_host: 192.168.1.21
+          interfaces:
+            - { name: FastEthernet0/1, ip: 10.20.12.1/24, description: "description *** Connected to router2 ***" }
+            - { name: FastEthernet1/0, ip: 192.168.14.1/24, description: "description *** Connected to router4 ***" }
+            - { name: loopback0, ip: 1.1.1.1/32, description: "description *** loopback0 ***" }
+        R2:
+          ansible_host: 192.168.1.22
+          interfaces:
+            - { name: FastEthernet0/1, ip: 10.20.12.2/24, description: "description *** Connected to router1 ***" }
+            - { name: FastEthernet1/0, ip: 192.168.23.2/24, description: "description *** Connected to router3 ***" }
+            - { name: loopback0, ip: 2.2.2.2/32, description: "description *** loopback0 ***" }
+        R3:
+          ansible_host: 192.168.1.23
+          interfaces:
+            - { name: FastEthernet0/1, ip: 172.16.34.3/24, description: "description *** Connected to router4 ***" }
+            - { name: FastEthernet1/0, ip: 192.168.23.3/24, description: "description *** Connected to router2 ***" }
+            - { name: loopback0, ip: 3.3.3.3/32, description: "description *** loopback0 ***" }
+        R4:
+          ansible_host: 192.168.1.24
+          interfaces:
+            - { name: FastEthernet0/1, ip: 172.16.34.4/24, description: "description *** Connected to router3 ***" }
+            - { name: FastEthernet1/0, ip: 192.168.14.4/24, description: "description *** Connected to router1 ***" }
+            - { name: loopback0, ip: 4.4.4.4/32, description: "description *** loopback0 ***" }

@@ -5,7 +5,7 @@ This project provides Ansible playbooks and roles to automate the configuration 
 ## Features
 
 - Automated configuration of network interfaces
-- Static route management
+- OSPF route management
 - Idempotent and repeatable deployments
 
 ## Requirements
@@ -26,14 +26,16 @@ This project provides Ansible playbooks and roles to automate the configuration 
 
 3. Run the playbook:
     ```
-    ansible-playbook -i inventory main.yml
+    ansible-playbook -i inventory onfigure_routers.yml
     ```
+4. Attached a screenshot of the Cisco Router network. 
 
 ## Directory Structure
 
-- `main.yml` - Main playbook file
-- `roles/` - Ansible roles for configuration
+- `configure_routers` - Main playbook file
+- `ansible.cfg/` - Ansible  configuration
 - `inventory` - Inventory of target hosts
+- 'group_vars\cisco_routers' - Cisco routers configuration 
 
 ## License
 
@@ -41,4 +43,4 @@ MIT License
 
 ## Author
 
-Your Name
+Sultan Al Arif

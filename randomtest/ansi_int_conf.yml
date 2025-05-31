@@ -1,3 +1,4 @@
+# this approch does not work as expected to read the hosts interfaces from the inventory file
 ---
   - name: interface configuration ansible file
     hosts: routers
